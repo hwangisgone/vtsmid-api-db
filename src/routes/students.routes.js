@@ -5,7 +5,7 @@ import {
 	createStudent,
 	updateStudent,
 	deleteStudent,
-} from "../controllers/pets.controllers.js";
+} from "../controllers/students.controllers.js";
 
 const router = express.Router();
 
