@@ -6,9 +6,9 @@ import {
 	queryDeleteStudent
 } from '../models/students.models.js'
 
-export const listStudents = (req, res) => {
+export const listStudents = async (req, res) => {
 	try {
-		const resp = queryListStudents()
+		const resp = await queryListStudents();
 		res.status(200).json(resp)
 
 	} catch (err) {
@@ -18,7 +18,7 @@ export const listStudents = (req, res) => {
 
 export const createStudent = (req, res) => {
 	try {
-		const resp = queryCreateStudent(req.body)
+		const resp = queryCreateStudent(req.body);
 		res.status(200).json(resp)
 
 	} catch (err) {
