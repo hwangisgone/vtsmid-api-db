@@ -9,7 +9,7 @@ CREATE TABLE student (
 	phone		VARCHAR(20),
 
 	first_name	VARCHAR(100) NOT NULL,
-	last_name2	VARCHAR(100) NOT NULL,
+	middle_name	VARCHAR(100) NOT NULL,
 	last_name	VARCHAR(100) NOT NULL,
 
 	birth_year	INT,
