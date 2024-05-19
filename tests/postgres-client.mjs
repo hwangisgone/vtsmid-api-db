@@ -1,6 +1,9 @@
-const { Client } = require('pg');
-const fs = require('node:fs');
-const path = require('node:path');
+import pg from 'pg';
+const { Client } = pg;
+
+import fs from 'node:fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 const pgclient = new Client({
 	host: process.env.POSTGRES_HOST,
@@ -13,6 +16,7 @@ const pgclient = new Client({
 await pgclient.connect();
 
 let testQuery = '';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const testQueryFilepath = path.join(__dirname, 'postgres-test.sql');;
 
 try {
