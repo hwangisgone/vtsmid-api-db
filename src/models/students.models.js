@@ -6,11 +6,11 @@ import pg from 'pg';
 const { Pool } = pg;
 
 const pool = new Pool({
-	host: process.env.PG_HOST,
-	user: process.env.PG_USER,
-	password: process.env.PG_PASSWORD,
-	database: process.env.PG_DATABASE,
-	port: process.env.PG_PORT,
+	host: process.env.POSTGRES_HOST,
+	port: process.env.POSTGRES_PORT,
+	user: process.env.POSTGRES_USER,
+	password: process.env.POSTGRES_PASSWORD,
+	database: process.env.POSTGRES_DATABASE,
 })
 
 export const closeDB = async () => {
