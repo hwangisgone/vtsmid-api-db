@@ -10,8 +10,7 @@ const pgclient = new Client({
 	database: process.env.POSTGRES_DATABASE,
 });
 
-pgclient.connect();
-
+await pgclient.connect();
 
 let testQuery = '';
 const testQueryFilepath = path.join(__dirname, 'postgres-test.sql');;
@@ -22,9 +21,10 @@ try {
   throw err;
 }
 
-pgclient.query(testQuery, (err, res) => {
-	if (err) throw err;
-});
+try {
+	await pgclient.query(testQuery);
+} catch (err) {
+	throw err;
+}
 
-
-pgclient.end();
+await pgclient.end();
