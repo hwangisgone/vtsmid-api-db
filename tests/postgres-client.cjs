@@ -13,7 +13,6 @@ const pgclient = new Client({
 pgclient.connect();
 
 
-
 let testQuery = '';
 const testQueryFilepath = path.join(__dirname, 'postgres-test.sql');;
 
@@ -26,3 +25,6 @@ try {
 pgclient.query(testQuery, (err, res) => {
 	if (err) throw err;
 });
+
+
+pgclient.end();
