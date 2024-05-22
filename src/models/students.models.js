@@ -20,7 +20,7 @@ export const closeDB = async () => {
 export const queryListStudents = async () => {
 	try {
 		const results = await pool.query(
-			`SELECT * FROM student 
+			`SELECT student.*, country.name AS country_name FROM student 
 			JOIN country ON student.country_id = country.country_id 
 			ORDER BY student_id ASC;`
 		);
@@ -47,9 +47,13 @@ export const queryCreateStudent = async (data) => {
 
 export const queryGetStudent = async (id) => {
 	try {
-		const results = await pool.query(`SELECT * FROM student WHERE student_id=$1;`, [id]);
+		const results = await pool.query(
+			`SELECT student.*, country.name AS country_name FROM student 
+			JOIN country ON student.country_id = country.country_id
+			WHERE student_id=$1;`, [id]);
+
 		return results.rows[0];
-		
+
 	} catch (error) {
 		throw error;
 	}
@@ -64,7 +68,7 @@ export const queryUpdateStudent = async (id, data) => {
 
 		if (filteredEntries.length == 0) {
 			// No new entries
-			console.log("No update");
+			// console.log("No update");
 			return await queryGetStudent(id);
 		}
 
@@ -78,8 +82,8 @@ export const queryUpdateStudent = async (id, data) => {
 		const dynamicParams = filteredEntries.map(([key, value]) => value);
 		dynamicParams.push(id);
 
-		console.log(dynamicQuery);
-		console.log(dynamicParams);
+		// console.log(dynamicQuery);
+		// console.log(dynamicParams);
 
 		const results = await pool.query(dynamicQuery, dynamicParams);
 		return results.rows[0];

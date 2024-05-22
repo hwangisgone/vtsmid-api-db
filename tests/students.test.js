@@ -43,7 +43,12 @@ describe('POST "/student"', () => {
 
 describe('GET "/student/:id"', () => {
 	test('gets a student', async () => {
-		const allFields = ["student_id", "email", "phone", "first_name", "middle_name", "last_name", "birth_year", "sex", "school", "country_id"];
+		const allFields = [
+			"student_id", "email", "phone", 
+			"first_name", "middle_name", "last_name", 
+			"birth_year", "sex", "school", 
+			"country_id", "country_name"
+		];
 
 		const res = await requestWithSupertest
 			.get('/api/student/' + testStudentId);
