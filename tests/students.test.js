@@ -14,6 +14,30 @@ describe('GET "/student"', () => {
 	})
 })
 
+describe('POST "/student"', () => {
+	test('creates a new student', async () => {
+		const testStudent = {
+			"email": "muoivan@gmail.com", 
+			"phone": "0987654321", 
+			"last_name": "Nguyen", 
+			"middle_name": "Van", 
+			"first_name": "Muoi", 
+			"birth_year": 2003, 
+			"sex": 1, 
+			"school": "HUST", 
+			"country_id": 1,
+		};
+
+		const res = await requestWithSupertest
+			.post('/api/student')
+			.send(testStudent);
+			
+		expect(res.status).toEqual(200);
+		expect(res.type).toEqual(expect.stringContaining('json'));
+		expect(res.body).toEqual(expect.objectContaining(testStudent));	// May return student_id
+	})
+})
+
 afterAll(done => {
 	// Closing the DB connection allows Jest to exit successfully.
 	closeDB();

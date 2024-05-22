@@ -31,8 +31,18 @@ export const queryListStudents = async () => {
 	}
 }
 
-export const queryCreateStudent = (data) => {
-	
+export const queryCreateStudent = async (data) => {
+	try {
+		const results = await pool.query(
+			`INSERT INTO student(email, phone, first_name, middle_name, last_name, birth_year, sex, school, country_id) 
+			VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *;`,
+			[data.email, data.phone, data.first_name, data.middle_name, data.last_name, data.birth_year, data.sex, data.school, data.country_id]
+		);
+		return results.rows[0];
+
+	} catch (error) {
+		throw error;
+	}
 }
 
 export const queryGetStudent = (id) => {
