@@ -56,6 +56,13 @@ export const queryUpdateStudent = async (id, data) => {
 		const filteredEntries = Object.entries(data)
 			.filter(([key, value]) => updateableFields.includes(key));
 
+		if (filteredEntries.length == 0) {
+			// No new entries
+			console.log("No update");
+			const results = await pool.query(`SELECT * FROM student WHERE student_id=$1;`, [id]);
+			return results.rows[0];
+		}
+
 		const dynamicSet = filteredEntries.map(([key, value]) => {
 			const paramStr = `${key}=\$${index}`;
 			index += 1;
