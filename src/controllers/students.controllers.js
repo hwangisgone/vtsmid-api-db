@@ -12,6 +12,7 @@ export const listStudents = async (req, res) => {
 		res.status(200).json(resp);
 
 	} catch (err) {
+		console.error(err);
 		res.status(500).send(err);
 	}
 }
@@ -22,6 +23,7 @@ export const createStudent = async (req, res) => {
 		res.status(200).json(resp);
 
 	} catch (err) {
+		console.error(err);
 		res.status(500).send(err);
 	}
 }
@@ -32,6 +34,7 @@ export const getStudent = async (req, res) => {
 		res.status(200).json(resp);
 
 	} catch (err) {
+		console.error(err);
 		res.status(500).send(err);
 	}
 }
@@ -42,6 +45,7 @@ export const updateStudent = async (req, res) => {
 		res.status(200).json(resp);
 
 	} catch (err) {
+		console.error(err);
 		res.status(500).send(err);
 	}
 }
@@ -52,6 +56,7 @@ export const deleteStudent = async (req, res) => {
 		res.status(200).json(resp);
 
 	} catch (err) {
+		console.error(err);
 		res.status(500).send(err);
 	}
 }

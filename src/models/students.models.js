@@ -45,14 +45,46 @@ export const queryCreateStudent = async (data) => {
 	}
 }
 
-export const queryGetStudent = (id) => {
+export const queryGetStudent = async (id) => {
 	
 }
 
-export const queryUpdateStudent = (id, data) => {
-	
+const updateableFields = ["email", "phone", "first_name", "middle_name", "last_name", "birth_year", "sex", "school", "country_id"];
+export const queryUpdateStudent = async (id, data) => {
+	try {
+		let index = 1;
+		const filteredEntries = Object.entries(data)
+			.filter(([key, value]) => updateableFields.includes(key));
+
+		if (filteredEntries.length == 0) {
+			// No new entries
+			console.log("No update");
+			const results = await pool.query(`SELECT * FROM student WHERE student_id=$1;`, [id]);
+			return results.rows[0];
+		}
+
+		const dynamicSet = filteredEntries.map(([key, value]) => {
+			const paramStr = `${key}=\$${index}`;
+			index += 1;
+			return paramStr;
+		}).join(', ');
+
+		const dynamicQuery = `UPDATE student SET ` + dynamicSet + ` WHERE student_id=\$${index} RETURNING *;`;
+		const dynamicParams = filteredEntries.map(([key, value]) => value);
+		dynamicParams.push(id);
+
+		console.log(dynamicQuery);
+		console.log(dynamicParams);
+
+		const results = await pool.query(dynamicQuery, dynamicParams);
+		return results.rows[0];
+
+	} catch (error) {
+		throw error;
+	}
 }
 
-export const queryDeleteStudent = (id) => {
+
+export const queryDeleteStudent = async (id) => {
 	
 }
