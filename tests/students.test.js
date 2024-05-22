@@ -31,10 +31,10 @@ describe('POST "/student"', () => {
 		const res = await requestWithSupertest
 			.post('/api/student')
 			.send(testStudent);
-
+			
 		expect(res.status).toEqual(200);
 		expect(res.type).toEqual(expect.stringContaining('json'));
-		expect(res.body).toEqual(testStudent);
+		expect(res.body).toEqual(expect.objectContaining(testStudent));	// May return student_id
 	})
 })
 

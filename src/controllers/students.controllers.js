@@ -16,9 +16,9 @@ export const listStudents = async (req, res) => {
 	}
 }
 
-export const createStudent = (req, res) => {
+export const createStudent = async (req, res) => {
 	try {
-		const resp = queryCreateStudent(req.body);
+		const resp = await queryCreateStudent(req.body);
 		res.status(200).json(resp);
 
 	} catch (err) {
@@ -26,9 +26,9 @@ export const createStudent = (req, res) => {
 	}
 }
 
-export const getStudent = (req, res) => {
+export const getStudent = async (req, res) => {
 	try {
-		const resp = queryGetStudent(parseInt(req.params.id));
+		const resp = await queryGetStudent(parseInt(req.params.id));
 		res.status(200).json(resp);
 
 	} catch (err) {
@@ -36,9 +36,9 @@ export const getStudent = (req, res) => {
 	}
 }
 
-export const updateStudent = (req, res) => {
+export const updateStudent = async (req, res) => {
 	try {
-		const resp = queryUpdateStudent(parseInt(req.params.id), req.body);
+		const resp = await queryUpdateStudent(parseInt(req.params.id), req.body);
 		res.status(200).json(resp);
 
 	} catch (err) {
@@ -46,9 +46,9 @@ export const updateStudent = (req, res) => {
 	}
 }
 
-export const deleteStudent = (req, res) => {
+export const deleteStudent = async (req, res) => {
 	try {
-		const resp = queryDeleteStudent(parseInt(req.params.id));
+		const resp = await queryDeleteStudent(parseInt(req.params.id));
 		res.status(200).json(resp);
 
 	} catch (err) {

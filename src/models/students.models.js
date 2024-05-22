@@ -31,7 +31,7 @@ export const queryListStudents = async () => {
 	}
 }
 
-export const queryCreateStudent = (data) => {
+export const queryCreateStudent = async (data) => {
 	try {
 		const results = await pool.query(
 			`INSERT INTO student(email, phone, first_name, middle_name, last_name, birth_year, sex, school, country_id) 
