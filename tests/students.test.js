@@ -38,6 +38,35 @@ describe('POST "/student"', () => {
 	})
 })
 
+describe('PUT "/student"', () => {
+	test('updates a student', async () => {
+		const testStudent = {
+			"wrong_email": "wrong@gmail.com",
+			"wrong_phone": "0987654321",
+			"last_name": "Dang", 
+			"birth_year": 2000, 
+			"gender": 2,
+			"school": "HUST - SOICT", 
+			"country": 1,
+		};
+		// 4 incorrect fields
+		// 3 correct fields
+		// 6 missing fields
+
+		const res = await requestWithSupertest
+			.put('/api/student/15')
+			.send(testStudent);
+			
+		expect(res.status).toEqual(200);
+		expect(res.type).toEqual(expect.stringContaining('json'));
+		expect(res.body).toEqual(expect.objectContaining({
+			"last_name": "Dang", 
+			"birth_year": 2000, 
+			"school": "HUST - SOICT", 
+		}));
+	})
+})
+
 afterAll(done => {
 	// Closing the DB connection allows Jest to exit successfully.
 	closeDB();
