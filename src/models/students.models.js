@@ -46,7 +46,13 @@ export const queryCreateStudent = async (data) => {
 }
 
 export const queryGetStudent = async (id) => {
-	
+	try {
+		const results = await pool.query(`SELECT * FROM student WHERE student_id=$1;`, [id]);
+		return results.rows[0];
+		
+	} catch (error) {
+		throw error;
+	}
 }
 
 const updateableFields = ["email", "phone", "first_name", "middle_name", "last_name", "birth_year", "sex", "school", "country_id"];
@@ -59,8 +65,7 @@ export const queryUpdateStudent = async (id, data) => {
 		if (filteredEntries.length == 0) {
 			// No new entries
 			console.log("No update");
-			const results = await pool.query(`SELECT * FROM student WHERE student_id=$1;`, [id]);
-			return results.rows[0];
+			return await queryGetStudent(id);
 		}
 
 		const dynamicSet = filteredEntries.map(([key, value]) => {
