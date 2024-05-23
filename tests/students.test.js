@@ -2,6 +2,8 @@ import supertest from 'supertest';
 import server from '../app';
 import { closeDB } from '../src/models/students.models.js';
 
+
+// Test start
 const requestWithSupertest = supertest(server); // We will use this function to mock HTTP requests
 const testStudentId = 15;
 let createdStudentId = 0;
@@ -42,7 +44,26 @@ describe('POST "/student"', () => {
 	})
 })
 
-describe('PUT "/student"', () => {
+describe('GET "/student/:id"', () => {
+	test('gets a student', async () => {
+		const allFields = [
+			"student_id", "email", "phone", 
+			"first_name", "middle_name", "last_name", 
+			"birth_year", "sex", "school", 
+			"country_id", "country_name"
+		];
+
+		const res = await requestWithSupertest
+			.get('/api/student/' + testStudentId);
+
+		expect(res.status).toEqual(200);
+		expect(res.type).toEqual(expect.stringContaining('json'));
+
+		allFields.forEach(key => expect(res.body).toHaveProperty(key));
+	})
+})
+
+describe('PUT "/student/:id"', () => {
 	test('updates a student', async () => {
 		const testUpdate = {
 			"last_name": "Dang", 
@@ -53,7 +74,7 @@ describe('PUT "/student"', () => {
 		// 6 missing fields
 
 		const res = await requestWithSupertest
-			.put('/api/student/15')
+			.put('/api/student/' + testStudentId)
 			.send(testUpdate);
 			
 		expect(res.status).toEqual(200);
@@ -73,7 +94,7 @@ describe('PUT "/student"', () => {
 		// TODO: get request to validate
 
 		const res = await requestWithSupertest
-			.put('/api/student/15')
+			.put('/api/student/' + testStudentId)
 			.send(testWrongUpdate);
 			
 		expect(res.status).toEqual(200);
@@ -96,7 +117,7 @@ describe('PUT "/student"', () => {
 		// TODO: get request to validate
 
 		const res = await requestWithSupertest
-			.put('/api/student/15')
+			.put('/api/student/' + testStudentId)
 			.send(Object.assign({}, testWrongUpdate, testCorrectUpdate));
 			
 		expect(res.status).toEqual(200);
