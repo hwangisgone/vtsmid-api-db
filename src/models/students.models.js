@@ -56,7 +56,11 @@ export const queryGetStudent = async (id) => {
 			JOIN country ON student.country_id = country.country_id
 			WHERE student_id=$1;`, [id]);
 
-		return results.rows[0];
+		if (results.rows.length == 1) {
+			return results.rows[0];
+		} else {
+			throw new NotFoundError('Student not found');
+		}
 
 	} catch (error) {
 		throw error;

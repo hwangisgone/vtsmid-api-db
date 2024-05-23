@@ -140,6 +140,7 @@ describe('DELETE "/student/:id"', () => {
 		const confirmRes = await requestWithSupertest
 			.get('/api/student/' + createdStudentId);
 
+		console.log(confirmRes.body)
 		expect(confirmRes.status).toEqual(404);
 	})
 })
