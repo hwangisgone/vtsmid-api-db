@@ -21,14 +21,9 @@ const testQueryFilepath = path.join(__dirname, 'postgres-test.sql');;
 
 try {
   testQuery = fs.readFileSync(testQueryFilepath, 'utf8');
-} catch (err) {
-  throw err;
-}
-
-try {
 	await pgclient.query(testQuery);
 } catch (err) {
-	throw err;
+  throw err;
 }
 
 await pgclient.end();
