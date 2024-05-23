@@ -2,6 +2,7 @@ import express from 'express'
 import cors from 'cors'
 
 import studentRoutes from './src/routes/students.routes.js'
+import { errorHandler } from './src/middlewares/errorHandler.js';
 
 const app = express()
 const port = 3000
@@ -12,6 +13,10 @@ app.use(express.json())
 
 /* Routes */
 app.use('/api/student', studentRoutes)
+
+/* Error handling */
+app.use(errorHandler)
+
 
 /* Server setup */
 if (process.env.NODE_ENV !== 'test') {
