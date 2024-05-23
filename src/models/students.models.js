@@ -17,6 +17,10 @@ export const closeDB = async () => {
 	await pool.end();
 }
 
+
+
+import { NotFoundError } from '../errors/NotFoundError.js';
+
 export const queryListStudents = async () => {
 	try {
 		const results = await pool.query(
@@ -77,7 +81,12 @@ export const queryUpdateStudent = async (id, data) => {
 		console.log(dynamicParams);
 
 		const results = await pool.query(dynamicQuery, dynamicParams);
-		return results.rows[0];
+		
+		if (results.rows.length == 1) {
+			return results.rows[0];
+		} else {
+			throw new NotFoundError('Student not found');
+		}
 
 	} catch (error) {
 		throw error;
@@ -86,5 +95,16 @@ export const queryUpdateStudent = async (id, data) => {
 
 
 export const queryDeleteStudent = async (id) => {
-	
+	try {
+		const results = await pool.query(`DELETE FROM student WHERE student_id=$1 RETURNING *;`, [id]);
+		
+		if (results.rows.length == 1) {
+			return results.rows[0];
+		} else {
+			throw new NotFoundError('Student not found');
+		}
+
+	} catch (error) {
+		throw error;
+	}
 }

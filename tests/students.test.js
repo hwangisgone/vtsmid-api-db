@@ -3,6 +3,8 @@ import server from '../app';
 import { closeDB } from '../src/models/students.models.js';
 
 const requestWithSupertest = supertest(server); // We will use this function to mock HTTP requests
+const testStudentId = 15;
+let createdStudentId = 0;
 
 describe('GET "/student"', () => {
 	test('returns all students', async () => {
@@ -35,6 +37,8 @@ describe('POST "/student"', () => {
 		expect(res.status).toEqual(200);
 		expect(res.type).toEqual(expect.stringContaining('json'));
 		expect(res.body).toEqual(expect.objectContaining(testStudent));	// May return student_id
+
+		createdStudentId = res.body.student_id;
 	})
 })
 
@@ -100,6 +104,22 @@ describe('PUT "/student"', () => {
 
 		expect(res.body).not.toEqual(expect.objectContaining(testWrongUpdate));
 		expect(res.body).toEqual(expect.objectContaining(testCorrectUpdate));
+	})
+})
+
+describe('DELETE "/student/:id"', () => {
+	test('deletes a student', async () => {
+		const res = await requestWithSupertest
+			.delete('/api/student/' + createdStudentId);
+
+		expect(res.status).toEqual(200);
+		expect(res.type).toEqual(expect.stringContaining('json'));
+
+		// Confirm that it's deleted
+		const confirmRes = await requestWithSupertest
+			.get('/api/student/' + createdStudentId);
+
+		expect(confirmRes.status).toEqual(404);
 	})
 })
 
