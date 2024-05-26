@@ -1,5 +1,5 @@
 import supertest from 'supertest';
-import server from '../app';
+import server from '../src/app';
 import { closeDB } from '../src/models/students.models.js';
 
 
