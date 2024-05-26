@@ -1,0 +1,6 @@
+# Stuffs to not be copied into Docker image
+
+.git
+*Dockerfile*
+*docker-compose*
+node_modules

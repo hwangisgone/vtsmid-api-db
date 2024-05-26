@@ -1,8 +1,8 @@
 import express from 'express'
 import cors from 'cors'
 
-import studentRoutes from './src/routes/students.routes.js'
-import { errorHandler } from './src/middlewares/errorHandler.js';
+import studentRoutes from './routes/students.routes.js'
+import { errorHandler } from './middlewares/errorHandler.js';
 
 const app = express()
 const port = 3000
